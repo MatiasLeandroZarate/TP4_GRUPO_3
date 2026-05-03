@@ -8,7 +8,7 @@
 </head>
 <body>
 
-<h1> Soy la página incio </h1>
+<h1> Soy la página inicio </h1>
 
 </body>
 </html>
