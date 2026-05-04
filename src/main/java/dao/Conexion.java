@@ -7,7 +7,7 @@ import java.sql.SQLException;
 
 public class Conexion {
 
-    private String HOST    = "jdbc:mysql://localhost:3306";
+    private String HOST    = "jdbc:mysql://localhost:3306/";
     private String USER = "admin";
     private String PASS   = "admin";
     private String  DBNAME  = "SegurosGroup";

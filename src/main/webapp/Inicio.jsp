@@ -10,11 +10,13 @@
 
 <form action = "InicioServlet" method = "get">
 	<a href="inicio">Inicio</a>
-	<a href="agregarSeguros">Agregar seguros</a>
+	<a href="AgregarSeguroServlet?AgregarSeguro=1">Agregar seguros</a>
 	<a href="listarSeguros">Listar seguros</a>
 </form>
 
 <h1> Soy la página inicio </h1>
+
+
 
 
 </body>
