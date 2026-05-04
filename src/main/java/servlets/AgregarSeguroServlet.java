@@ -16,8 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 import Entidad.Seguro;
 import Entidad.TipoSeguro;
 import dao.Conexion;
-import dao.DaoSeguro;
-import dao.DaoTipoSeguro;
+
 
 
 /**
@@ -40,25 +39,43 @@ public class AgregarSeguroServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {		
 		
-			if(request.getParameter("AgregarSeguro") != null) {
-				
+		String nextId = "";
+		List<TipoSeguro> listaCategoriaSeguros = new ArrayList<>();
+		
+		Conexion conexion = new Conexion();
+		Connection cn = null;
+		
+		try {
+			cn = conexion.getConnection();
+			Statement st = cn.createStatement();
 			
-				DaoSeguro daoSeguro = new DaoSeguro();
-				DaoTipoSeguro daoTipoSeguro = new DaoTipoSeguro();
-				
-				String nextId = daoSeguro.obtenerSiguienteId();
-				List<TipoSeguro> listaCategoriaSeguros= daoTipoSeguro.listarCategorias();
-				
 			
-				
-			
-		        request.setAttribute("nextId", nextId);
-		        request.setAttribute("listaCategorias", listaCategoriaSeguros);
-
-		   
-		        request.getRequestDispatcher("AgregarSeguro.jsp").forward(request, response);
+			String queryId = "SELECT IFNULL(MAX(idSeguro),0)+1 AS proximoId FROM seguros";
+			ResultSet rsId = st.executeQuery(queryId);
+			if (rsId.next()) {
+				nextId = rsId.getString("proximoId");
 			}
+			
+			
+			String queryTipos = "SELECT * FROM tiposeguros";
+			ResultSet rsTipos = st.executeQuery(queryTipos);
+			while (rsTipos.next()) {
+				TipoSeguro ts = new TipoSeguro();
+				ts.setIdTipo(rsTipos.getInt("idTipo"));
+				ts.setDescripcion(rsTipos.getString("descripcion"));
+				listaCategoriaSeguros.add(ts);
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+			
+		request.setAttribute("nextId", nextId);
+		request.setAttribute("tipos", listaCategoriaSeguros);
 
+		
+		request.getRequestDispatcher("AgregarSeguro.jsp").forward(request, response);
 	}
 
 	/**
@@ -70,3 +87,4 @@ public class AgregarSeguroServlet extends HttpServlet {
 	}
 
 }
+
