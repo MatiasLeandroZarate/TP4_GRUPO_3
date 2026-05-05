@@ -17,24 +17,5 @@
 
 <h1>Soy la página inicio</h1>
 
-<h2>Categorías de seguros</h2>
-<ul>
-<%
-    List listaCategorias = (List) request.getAttribute("listaCategorias");
-    if (listaCategorias != null && !listaCategorias.isEmpty()) {
-        for (Object obj : listaCategorias) {
-            TipoSeguro ts = (TipoSeguro) obj;
-%>
-    <li><%= ts.getIdTipo() %> - <%= ts.getDescripcion() %></li>
-<%
-        }
-    } else {
-%>
-    <li>No hay categorías disponibles.</li>
-<%
-    }
-%>
-</ul>
-
 </body>
 </html>
